@@ -45,6 +45,8 @@ class MyApp extends StatelessWidget {
               GetPage(name: '/detail', page: () => DetailPeserta()),
               GetPage(name: '/izin', page: () => IzinScreen()),
               GetPage(name: '/addberita', page: () => AddBeritaScreen()),
+              GetPage(name: '/detailberita', page: () => DetailBerita()),
+              GetPage(name: '/listberita', page: () => ListBerita()),
             ],
           );
         }

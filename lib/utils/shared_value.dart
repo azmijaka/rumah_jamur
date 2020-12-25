@@ -1,6 +1,9 @@
 part of 'utils.dart';
 
 mixin Warna {
+  // Mixins dalam Dart bekerja dengan membuat kelas baru yang melapisi implementasi
+  // dari mixin di atas superclass untuk membuat kelas baru - ini bukan "di samping"
+  // tetapi "di atas" superclass, jadi tidak ada ambiguitas dalam cara menyelesaikan pencarian.
   static Color primary = Color(0xFFd1a17b);
   static Color red = Color(0xFFff7f50);
   static Color blue = Color(0xFF70a1ff);

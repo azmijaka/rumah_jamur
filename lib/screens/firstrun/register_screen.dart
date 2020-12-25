@@ -7,9 +7,9 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
-  TextEditingController passController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController nimController = TextEditingController();
+  TextEditingController passController = TextEditingController();
 
   Widget _submitButton() {
     return MyButton(
@@ -43,6 +43,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 UserModel(
                     nama: nama,
                     nim: nim.toUpperCase(),
+                    role: '',
+                    email: '',
+                    noTelephone: '',
+                    uid: '',
                     photoUrl:
                         "https://sia.unram.ac.id/index.php/foto/mahasiswa/" +
                             nim.toUpperCase() +

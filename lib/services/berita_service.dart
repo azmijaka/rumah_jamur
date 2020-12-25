@@ -3,6 +3,7 @@ part of 'services.dart';
 class BeritaService {
   static CollectionReference beritaCollection =
       FirebaseFirestore.instance.collection('berita');
+
   static CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 

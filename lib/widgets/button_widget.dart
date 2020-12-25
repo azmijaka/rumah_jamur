@@ -1,12 +1,14 @@
 part of 'widgets.dart';
 
 class MyButton extends StatelessWidget {
-  final String text;
-  final Function onPress;
-  final Color color;
-  final Color textColor;
   MyButton(
       {this.text, this.onPress, this.color, this.textColor = Colors.white});
+
+  final Color color;
+  final Function onPress;
+  final String text;
+  final Color textColor;
+
   @override
   Widget build(BuildContext context) {
     return VxBox(

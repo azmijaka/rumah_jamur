@@ -1,12 +1,12 @@
 part of 'widgets.dart';
 
 class MyIconButton extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  final Function onPressed;
-
   const MyIconButton({Key key, this.icon, this.text, this.onPressed})
       : super(key: key);
+
+  final IconData icon;
+  final Function onPressed;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,10 @@ class MyIconButton extends StatelessWidget {
                 alignment: MainAxisAlignment.center,
                 crossAlignment: CrossAxisAlignment.center))
         .p32
-        .roundedLg
+        .rounded
         .color(Warna.lynxWhite)
         .make()
-        .wFull(context)
+        .p12()
         .onTap(onPressed);
   }
 }

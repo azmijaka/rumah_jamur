@@ -1,14 +1,6 @@
 part of 'models.dart';
 
 class BeritaModel {
-  final String code;
-  final String judul;
-  final String imageUrl;
-  final String content;
-  final String uid;
-  final String nama;
-  final DateTime date;
-
   BeritaModel(
       {this.code,
       this.judul,
@@ -17,4 +9,12 @@ class BeritaModel {
       this.uid,
       this.nama,
       this.date});
+
+  final String code;
+  final String content;
+  final DateTime date;
+  final String imageUrl;
+  final String judul;
+  final String nama;
+  final String uid;
 }

@@ -32,7 +32,9 @@ class AuthServices {
       return Result(userModel: userCredential.user);
     } on FirebaseAuthException catch (e) {
       print(e.toString());
-      return Result(message: e.toString().split('/')[1].split(']')[1].trim());
+      return Result(
+          message: e.toString().split('/')[1].split(']')[1].trim(),
+          userModel: null);
     }
   }
 
@@ -40,7 +42,7 @@ class AuthServices {
     await auth.sendPasswordResetEmail(email: email);
   }
 
-  static void signOut() async {
+  static Future<void> signOut() async {
     await auth.signOut();
   }
 
@@ -49,8 +51,8 @@ class AuthServices {
 }
 
 class Result {
-  final User userModel;
-  final String message;
-
   Result({this.userModel, this.message});
+
+  final String message;
+  final User userModel;
 }

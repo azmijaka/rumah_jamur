@@ -16,6 +16,7 @@ import 'package:rumah_jamur/models/models.dart';
 import 'package:rumah_jamur/services/services.dart';
 import 'package:rumah_jamur/utils/utils.dart';
 import 'package:rumah_jamur/widgets/widgets.dart';
+import 'package:somedialog/somedialog.dart';
 import 'package:spincircle_bottom_bar/modals.dart';
 import 'package:spincircle_bottom_bar/spincircle_bottom_bar.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -29,9 +30,11 @@ part 'firstrun/login_screen.dart';
 
 part 'home/home_screen.dart';
 part 'home/profile_screen.dart';
-part 'home/berita_screen.dart';
 part 'home/code_presensi.dart';
 part 'home/dashboard_screen.dart';
+
+part 'berita/detail_berita.dart';
+part 'berita/list_berita.dart';
 
 part 'information/success_screen.dart';
 part 'information/izin_screen.dart';

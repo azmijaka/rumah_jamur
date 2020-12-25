@@ -6,11 +6,6 @@ class ListPeserta extends StatefulWidget {
 }
 
 class _ListPesertaState extends State<ListPeserta> {
-  CollectionReference presensis = FirebaseFirestore.instance
-      .collection('presensi')
-      .doc(Get.arguments)
-      .collection('hadir');
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,12 +13,17 @@ class _ListPesertaState extends State<ListPeserta> {
       body: VStack([
         BackButtonWidget(
           iconData: Icons.arrow_back_ios_outlined,
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
           title: 'List Peserta',
         ),
         Expanded(
           child: StreamBuilder<QuerySnapshot>(
-            stream: presensis.snapshots(),
+            stream: PresensiService.presensiCollection
+                .doc(Get.arguments)
+                .collection('hadir')
+                .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {

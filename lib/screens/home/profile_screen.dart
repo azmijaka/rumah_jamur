@@ -1,8 +1,9 @@
 part of '../screens.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final UserModel user;
   const ProfileScreen({Key key, this.user}) : super(key: key);
+
+  final UserModel user;
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -10,101 +11,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   int touchedIndex = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Warna.white,
-        body: VStack([
-          20.heightBox,
-          widget.user.nama.text.textStyle(boldText).xl2.make(),
-          20.heightBox,
-          "Email : ${widget.user.email}".text.textStyle(primaryText).xs.make(),
-          10.heightBox,
-          "Nim : ${widget.user.nim}".text.textStyle(primaryText).xs.make(),
-          28.heightBox,
-          FutureBuilder<KehadiranModel>(
-              future: PresensiService.getCount(widget.user.uid),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return ErrorScreen();
-                }
-
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation(Warna.primary),
-                  ).centered().p16();
-                }
-                return VStack([
-                  HStack(
-                    [
-                      Indicator(
-                        color: Warna.blue,
-                        size: 12,
-                        text: 'Hadir',
-                        textColor: Warna.darkBrown,
-                        isSquare: false,
-                      ),
-                      Indicator(
-                        color: Warna.green,
-                        size: 12,
-                        text: 'Izin',
-                        textColor: Warna.darkBrown,
-                        isSquare: false,
-                      ),
-                      Indicator(
-                        color: Warna.red,
-                        size: 12,
-                        text: 'Tidak Hadir',
-                        textColor: Warna.darkBrown,
-                        isSquare: false,
-                      )
-                    ],
-                    axisSize: MainAxisSize.max,
-                    alignment: MainAxisAlignment.spaceAround,
-                  ),
-                  PieChart(
-                    PieChartData(
-                        borderData: FlBorderData(
-                          show: false,
-                        ),
-                        sectionsSpace: 4,
-                        centerSpaceRadius: 40,
-                        sections: showingSections(snapshot.data.kehadiran,
-                            snapshot.data.izin, snapshot.data.bolos)),
-                  ).centered(),
-                ], alignment: MainAxisAlignment.spaceBetween);
-              }),
-          (widget.user.role == "panitia")
-              ? MyIconButton(
-                  icon: Icons.calendar_today_rounded,
-                  onPressed: () {
-                    Get.toNamed('/jadwal');
-                  },
-                  text: 'Jadwal',
-                )
-              : 40.heightBox,
-          (widget.user.role == "panitia")
-              ? MyIconButton(
-                  icon: Icons.book_online_outlined,
-                  onPressed: () {
-                    Get.toNamed('/addberita', arguments: widget.user);
-                  },
-                  text: 'Berita',
-                )
-              : 40.heightBox,
-          16.heightBox,
-          MyButton(
-            color: Warna.red,
-            text: 'Keluar',
-            onPress: () {
-              box.remove('UID');
-              AuthServices.signOut();
-              Get.offAllNamed('/welcome');
-            },
-          ),
-          16.heightBox,
-        ]).p16().scrollVertical());
-  }
 
   List<PieChartSectionData> showingSections(
       double hadir, double izin, double bolos) {
@@ -151,5 +57,137 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return null;
       }
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Warna.white,
+        body: VStack([
+          HStack(
+            [
+              VStack([
+                20.heightBox,
+                widget.user.nama.text.textStyle(boldText).xl2.make(),
+                20.heightBox,
+                "Email : ${widget.user.email}"
+                    .text
+                    .textStyle(primaryText)
+                    .xs
+                    .make(),
+                10.heightBox,
+                "Nim : ${widget.user.nim}"
+                    .text
+                    .textStyle(primaryText)
+                    .xs
+                    .make(),
+                28.heightBox,
+              ]),
+              IconButton(
+                icon: Icon(Icons.logout),
+                color: Warna.red,
+                onPressed: () {
+                  SomeDialog(
+                      appName: "RumahJamur",
+                      context: context,
+                      path: 'assets/animations/sad.json',
+                      title: 'Logout',
+                      content:
+                          'Keluarkan akun ${widget.user.email} dari aplikasi RumahJamur?',
+                      submit: () async {
+                        box.remove('UID');
+                        await AuthServices.signOut();
+                        Get.offAllNamed('/welcome');
+                      },
+                      mode: SomeMode.Lottie);
+                },
+              )
+            ],
+            axisSize: MainAxisSize.max,
+            alignment: MainAxisAlignment.spaceBetween,
+          ),
+          FutureBuilder<KehadiranModel>(
+              future: PresensiService.getCount(widget.user.uid),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return ErrorScreen();
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(Warna.primary),
+                  ).centered().p16();
+                }
+                return VStack([
+                  HStack(
+                    [
+                      Indicator(
+                        color: Warna.blue,
+                        size: 12,
+                        text: 'Hadir',
+                        textColor: Warna.darkBrown,
+                        isSquare: false,
+                      ),
+                      Indicator(
+                        color: Warna.green,
+                        size: 12,
+                        text: 'Izin',
+                        textColor: Warna.darkBrown,
+                        isSquare: false,
+                      ),
+                      Indicator(
+                        color: Warna.red,
+                        size: 12,
+                        text: 'Pertemuan',
+                        textColor: Warna.darkBrown,
+                        isSquare: false,
+                      )
+                    ],
+                    axisSize: MainAxisSize.max,
+                    alignment: MainAxisAlignment.spaceAround,
+                  ),
+                  PieChart(
+                    PieChartData(
+                        borderData: FlBorderData(
+                          show: false,
+                        ),
+                        sectionsSpace: 4,
+                        centerSpaceRadius: 40,
+                        sections: showingSections(snapshot.data.kehadiran,
+                            snapshot.data.izin, snapshot.data.bolos)),
+                  ).centered(),
+                ], alignment: MainAxisAlignment.spaceBetween);
+              }),
+          (widget.user.role == "panitia")
+              ? HStack(
+                  [
+                    Expanded(
+                      flex: 1,
+                      child: MyIconButton(
+                        icon: Icons.calendar_today_rounded,
+                        onPressed: () {
+                          Get.toNamed('/jadwal');
+                        },
+                        text: 'Jadwal',
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: MyIconButton(
+                        icon: Icons.book_online_outlined,
+                        onPressed: () {
+                          Get.toNamed('/listberita', arguments: widget.user);
+                        },
+                        text: 'Berita',
+                      ),
+                    )
+                  ],
+                  alignment: MainAxisAlignment.spaceBetween,
+                  axisSize: MainAxisSize.max,
+                )
+              : 40.heightBox,
+          16.heightBox,
+          16.heightBox,
+        ]).p16().scrollVertical());
   }
 }

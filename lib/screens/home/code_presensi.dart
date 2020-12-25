@@ -6,8 +6,8 @@ class CodePresensi extends StatefulWidget {
 }
 
 class _CodePresensiState extends State<CodePresensi> {
-  UserModel userModel = Get.arguments;
   TextEditingController kodeController = TextEditingController();
+  UserModel userModel = Get.arguments;
 
   @override
   Widget build(BuildContext context) {

@@ -1,16 +1,49 @@
 part of '../screens.dart';
 
 class DashBoardScreen extends StatefulWidget {
+  const DashBoardScreen({Key key, this.model}) : super(key: key);
+
   final UserModel model;
 
-  const DashBoardScreen({Key key, this.model}) : super(key: key);
   @override
   _DashBoardScreenState createState() => _DashBoardScreenState();
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   int touchedIndex;
-  CollectionReference berita = FirebaseFirestore.instance.collection('berita');
+
+  Widget _title() {
+    return RichText(
+      textAlign: TextAlign.start,
+      text: TextSpan(
+          text: 'Rumah',
+          style: boldText.copyWith(fontSize: 28, color: Warna.darkBrown),
+          children: [
+            TextSpan(
+                text: 'Jamur',
+                style:
+                    lightText.copyWith(fontSize: 28, color: Warna.darkBrown)),
+          ]),
+    );
+  }
+
+  Widget _grettings(UserModel user) {
+    return RichText(
+      textAlign: TextAlign.start,
+      text: TextSpan(
+          text: 'Selamat ${greeting()}, ',
+          style: primaryText,
+          children: [
+            TextSpan(
+              text: '\n${user.nama}',
+              style: boldText.copyWith(
+                fontSize: 18,
+                color: Warna.accent,
+              ),
+            ),
+          ]),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +64,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           ]).p16(),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: berita.snapshots(),
+              stream: BeritaService.beritaCollection.snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
@@ -84,19 +117,26 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     color: Warna.darkBrown.withOpacity(.7)))
                             .objectCenterRight(),
                         10.heightBox,
-                        Text(
-                          document.data()['judul'],
-                          style: boldText.copyWith(
-                            fontSize: 18,
-                          ),
-                        ),
+                        Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: VStack([
+                              Text(
+                                document.data()['judul'],
+                                maxLines: 3,
+                                overflow: TextOverflow.clip,
+                                style: boldText.copyWith(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              12.heightBox,
+                              Text(document.data()['content'],
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  style: primaryText.copyWith(
+                                      fontSize: 10,
+                                      color: Warna.darkBrown.withOpacity(.7))),
+                            ])),
                         4.heightBox,
-                        Text(document.data()['content'],
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: primaryText.copyWith(
-                                fontSize: 14,
-                                color: Warna.darkBrown.withOpacity(.7))),
                       ], axisSize: MainAxisSize.max),
                       10.heightBox,
                     ]))
@@ -107,10 +147,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         .wFull(context)
                         .pSymmetric(v: 8, h: 16)
                         .onTap(() async {
-                      Get.toNamed('/detail', arguments: [
+                      Get.toNamed('/detailberita', arguments: [
+                        document.data()['imageUrl'],
+                        document.data()['date'],
+                        document.data()['judul'],
+                        document.data()['content'],
                         document.data()['nama'],
-                        document.data()['nim'],
-                        document.data()['uid']
+                        document.data()['uid'],
                       ]);
                     });
                   }).toList(),
@@ -121,38 +164,5 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         ],
       ),
     ).make().whFull(context);
-  }
-
-  Widget _title() {
-    return RichText(
-      textAlign: TextAlign.start,
-      text: TextSpan(
-          text: 'Rumah',
-          style: boldText.copyWith(fontSize: 28, color: Warna.darkBrown),
-          children: [
-            TextSpan(
-                text: 'Jamur',
-                style:
-                    lightText.copyWith(fontSize: 28, color: Warna.darkBrown)),
-          ]),
-    );
-  }
-
-  Widget _grettings(UserModel user) {
-    return RichText(
-      textAlign: TextAlign.start,
-      text: TextSpan(
-          text: 'Selamat ${greeting()}, ',
-          style: primaryText,
-          children: [
-            TextSpan(
-              text: '\n${user.nama}',
-              style: boldText.copyWith(
-                fontSize: 18,
-                color: Warna.accent,
-              ),
-            ),
-          ]),
-    );
   }
 }

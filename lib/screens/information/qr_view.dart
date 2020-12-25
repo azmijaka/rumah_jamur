@@ -9,6 +9,7 @@ class _QrViewState extends State<QrView> {
   Uint8List bytes = Get.arguments[0];
   String code = Get.arguments[1];
   String url = Get.arguments[2];
+
   GlobalKey _globalKey = GlobalKey();
 
   @override

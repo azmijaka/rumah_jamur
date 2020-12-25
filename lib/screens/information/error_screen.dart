@@ -9,9 +9,9 @@ class _ErrorScreenState extends State<ErrorScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
+      onWillPop: () async {
         Get.offAllNamed('/home');
-        return;
+        return false;
       },
       child: Scaffold(
         backgroundColor: Warna.red.withOpacity(.8),

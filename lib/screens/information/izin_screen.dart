@@ -6,9 +6,10 @@ class IzinScreen extends StatefulWidget {
 }
 
 class _IzinScreenState extends State<IzinScreen> {
+  String code = Get.arguments[1];
   TextEditingController keterangan = TextEditingController();
   UserModel userModel = Get.arguments[0];
-  String code = Get.arguments[1];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

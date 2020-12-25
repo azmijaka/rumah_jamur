@@ -3,6 +3,7 @@ part of 'services.dart';
 class PresensiService {
   static CollectionReference presensiCollection =
       FirebaseFirestore.instance.collection('presensi');
+
   static CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
@@ -102,6 +103,4 @@ class PresensiService {
         snapshotIzin.size.toDouble(),
         snapshot.size.toDouble() - snapshotAll.size.toDouble());
   }
-
-  
 }

@@ -1,17 +1,18 @@
 part of 'widgets.dart';
 
 class TextFieldKu extends StatefulWidget {
-  final TextEditingController controller;
-  final String keterangan;
-  final TextInputType inputType;
-  final bool isPassword;
-  final bool multiLine;
   TextFieldKu(
       {this.controller,
       this.keterangan = "Keterangan",
       this.inputType,
       this.multiLine = false,
       this.isPassword = false});
+
+  final TextEditingController controller;
+  final TextInputType inputType;
+  final bool isPassword;
+  final String keterangan;
+  final bool multiLine;
 
   @override
   _TextFieldKuState createState() => _TextFieldKuState();

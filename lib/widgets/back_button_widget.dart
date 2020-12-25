@@ -1,11 +1,6 @@
 part of 'widgets.dart';
 
 class BackButtonWidget extends StatelessWidget {
-  final IconData iconData;
-  final Function onPressed;
-  final String title;
-  final Color color;
-
   const BackButtonWidget(
       {Key key,
       this.iconData,
@@ -13,6 +8,11 @@ class BackButtonWidget extends StatelessWidget {
       this.title,
       this.color = Colors.transparent})
       : super(key: key);
+
+  final Color color;
+  final IconData iconData;
+  final Function onPressed;
+  final String title;
 
   @override
   Widget build(BuildContext context) {

@@ -6,16 +6,16 @@ class ListPresensi extends StatefulWidget {
 }
 
 class _ListPresensiState extends State<ListPresensi> {
-  CollectionReference presensis =
-      FirebaseFirestore.instance.collection('presensi');
   Uint8List bytes = Uint8List(0);
+
   String uid = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
+      onWillPop: () async {
         Get.back();
-        return;
+        return false;
       },
       child: Scaffold(
           backgroundColor: Warna.white,
@@ -30,7 +30,7 @@ class _ListPresensiState extends State<ListPresensi> {
               ),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: presensis.snapshots(),
+                  stream: PresensiService.presensiCollection.snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {

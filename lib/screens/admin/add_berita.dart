@@ -6,12 +6,13 @@ class AddBeritaScreen extends StatefulWidget {
 }
 
 class _AddBeritaScreenState extends State<AddBeritaScreen> {
-  bool isEdit = false;
-  String imageUrl;
   String code;
-  UserModel userModel = Get.arguments;
-  TextEditingController judulController = TextEditingController();
   TextEditingController contentController = TextEditingController();
+  String imageUrl;
+  bool isEdit = false;
+  TextEditingController judulController = TextEditingController();
+  UserModel userModel = Get.arguments;
+
   @override
   void initState() {
     super.initState();
@@ -144,7 +145,8 @@ class _AddBeritaScreenState extends State<AddBeritaScreen> {
                       imageUrl: imageUrl,
                       content: contentController.text,
                       uid: userModel.uid,
-                      nama: userModel.nama))
+                      nama: userModel.nama,
+                      date: DateTime.now()))
                   .then((value) {
                 Get.back();
                 Get.offAllNamed(
